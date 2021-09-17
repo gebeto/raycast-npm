@@ -1,0 +1,33 @@
+{
+  "name": "npm",
+  "title": "NPM",
+  "description": "NPM client",
+  "icon": "command-icon.png",
+  "author": "gebeto",
+  "commands": [
+    {
+      "name": "index",
+      "title": "NPM",
+      "description": "NPM client",
+      "mode": "view"
+    }
+  ],
+  "dependencies": {
+    "@raycast/api": "^0.1.0",
+    "node-fetch": "^2.6.1"
+  },
+  "devDependencies": {
+    "@types/node": "^16.4.3",
+    "@types/node-fetch": "^2.5.12",
+    "@types/react": "^17.0.15",
+    "@typescript-eslint/eslint-plugin": "^4.28.5",
+    "@typescript-eslint/parser": "^4.28.5",
+    "eslint": "^7.31.0",
+    "eslint-config-prettier": "^8.3.0",
+    "typescript": "^4.3.5"
+  },
+  "scripts": {
+    "build": "ray build -e dist",
+    "dev": "ray develop"
+  }
+}
