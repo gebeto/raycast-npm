@@ -56,6 +56,7 @@ function PackagesListItem(props: { article: Record<string, string> }) {
     >
       <ActionPanel>
         <OpenInBrowserAction url={article.package.links.npm} />
+        <CopyToClipboardAction title="Copy link" content={article.package.links.npm} />
         <CopyToClipboardAction shortcut={{ modifiers: ["cmd", "shift"], key: "y" }} title="Copy Yarn" content={`yarn add ${article.package.name}`} />
         <CopyToClipboardAction shortcut={{ modifiers: ["cmd", "shift"], key: "n" }} title="Copy NPM" content={`npm install ${article.package.name}`} />
       </ActionPanel>
