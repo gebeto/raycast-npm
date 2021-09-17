@@ -8,20 +8,8 @@ import {
   showToast,
   ToastStyle,
 } from "@raycast/api";
-import fetch from "node-fetch";
+import { fetchPackages } from './services';
 
-
-async function fetchPackages(query: string): Promise<Record<string, string>[]> {
-  try {
-    const response = await fetch(`https://api.npms.io/v2/search/suggestions?q=${query}`);
-    const json = await response.json();
-    return json as Record<string, string>[];
-  } catch (error) {
-    console.error(error);
-    showToast(ToastStyle.Failure, "Could not load articles");
-    return Promise.resolve([]);
-  }
-}
 
 function PackagesList(props) {
   const [isLoading, setIsLoading] = React.useState(false);
@@ -36,9 +24,16 @@ function PackagesList(props) {
 
       onSearchTextChange={async (text) => {
         setIsLoading(true);
-        const result = await fetchPackages(text);
-        console.log(' RED', result);
-        setItems(result.length ? result : []);
+        try {
+          if (text) {
+            const result = await fetchPackages(text);
+            setItems(result);
+          } else {
+            setItems([]);
+          }
+        } catch(e) {
+          console.error(e);
+        }
         setIsLoading(false);
       }}
      >
@@ -61,7 +56,8 @@ function PackagesListItem(props: { article: Record<string, string> }) {
     >
       <ActionPanel>
         <OpenInBrowserAction url={article.package.links.npm} />
-        <CopyToClipboardAction title="Copy URL" content={article.package.links.npm} />
+        <CopyToClipboardAction shortcut={{ modifiers: ["cmd", "shift"], key: "y" }} title="Copy Yarn" content={`yarn add ${article.package.name}`} />
+        <CopyToClipboardAction shortcut={{ modifiers: ["cmd", "shift"], key: "n" }} title="Copy NPM" content={`npm install ${article.package.name}`} />
       </ActionPanel>
     </List.Item>
   );
