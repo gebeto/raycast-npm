@@ -1,8 +1,25 @@
+import { showToast, ToastStyle } from '@raycast/api';
 import fetch from "node-fetch";
 
 
 export const getPackageSize = async (packageName: string) => {
 	return fetch(`https://bundlephobia.com/api/size?package=${packageName}&record=true`);
+}
+
+
+const extractor = /\.com\/([\w\W]+)/;
+export const getRepoDetails = async (repo: string) => {
+  const name = extractor.exec(repo)?.[1];
+  const branches = ["master", "main"];
+  for (const branch of branches) {
+    let req = await fetch(`https://raw.githubusercontent.com/${name}/${branch}/README.md`);
+    if (req.ok) {
+      let data = await req.text();
+      data = data.replace(/\!\[.+\]\(.+\)/, '');
+      return data;
+    }
+  }
+  return false;
 }
 
 
