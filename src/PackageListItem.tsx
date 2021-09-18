@@ -20,13 +20,20 @@ export type PackagesListItemProps = {
 export const PackagesListItem: React.FC<PackagesListItemProps> = ({ item }) => {
   const { push } = useNavigation();
 
+  const accessory = React.useMemo(() => {
+    if (item.flags?.deprecated) {
+      return `DEPRECATED | v${item.package.version}`
+    }
+    return `v${item.package.version}`
+  }, [item.package]);
+
   return (
     <List.Item
       id={item.package.name}
       title={item.package.name}
       subtitle={item.package.description}
       icon="command-icon.png"
-      accessoryTitle={`v${item.package.version}`}
+      accessoryTitle={accessory}
     >
       <ActionPanel>
         <ActionPanel.Item

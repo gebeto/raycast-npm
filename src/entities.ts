@@ -28,6 +28,10 @@ export type NPMPackage = {
       email: Email;
     }[];
   };
+  flags?: {
+    deprecated?: string;
+    unstable: boolean;
+  };
   score: {
     final: Float;
     detail: {
