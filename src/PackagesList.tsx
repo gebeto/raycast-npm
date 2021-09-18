@@ -1,9 +1,6 @@
 import React from 'react';
-import {
-  List,
-} from "@raycast/api";
+import { List } from "@raycast/api";
 import { fetchPackages } from './services';
-
 import { PackagesListItem } from './PackageListItem';
 import { NPMPackage } from './entities';
 
@@ -14,11 +11,10 @@ export const PackagesList = () => {
 
   return (
     <List
-      searchBarPlaceholder="Filter packages by name..."
-      navigationTitle="Search"
-      isLoading={isLoading}
       throttle
-
+      isLoading={isLoading}
+      navigationTitle="Search Package"
+      searchBarPlaceholder="Filter packages by name..."
       onSearchTextChange={async (text) => {
         setIsLoading(true);
         try {
