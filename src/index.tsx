@@ -1,16 +1,14 @@
 import React from 'react';
 import {
-  ActionPanel,
-  CopyToClipboardAction,
-  Detail,
   List,
-  OpenInBrowserAction,
   render,
-  showToast,
-  ToastStyle,
-  useNavigation
+  ActionPanel,
+  useNavigation,
+  CopyToClipboardAction,
+  OpenInBrowserAction,
 } from "@raycast/api";
-import { fetchPackages, getRepoDetails } from './services';
+import { fetchPackages } from './services';
+import { PackageDetails } from './PackageDetails';
 
 
 function PackagesList() {
@@ -47,31 +45,6 @@ function PackagesList() {
 }
 
 
-function Details(props: { title: string, repo: string }) {
-  const { pop } = useNavigation();
-  const [details, setDetails] = React.useState<string>();
-
-  React.useEffect(() => {
-    (async () => {
-      const repoDetails = await getRepoDetails(props.repo);
-      if (repoDetails === false) {
-        pop();
-        showToast(ToastStyle.Failure, "Details is not found");
-      }
-      setDetails(repoDetails);
-    })();
-  }, [props.repo]);
-
-  return (
-    <Detail navigationTitle={`Details: ${props.title}`} markdown={details} isLoading={!details}>
-      <ActionPanel title="Detail">
-        <ActionPanel.Item title="Pop Back" onAction={pop} />
-      </ActionPanel>
-    </Detail>
-  );
-}
-
-
 function PackagesListItem(props: { article: Record<string, string> }) {
   const article = props.article;
 
@@ -90,7 +63,7 @@ function PackagesListItem(props: { article: Record<string, string> }) {
           title="Details"
           icon="command-icon.png"
           onAction={async () => {
-            push(<Details title={article.package.name} repo={article.package.links.repository} />)
+            push(<PackageDetails title={article.package.name} repo={article.package.links.repository} />)
           }}
         />
         <OpenInBrowserAction title="Open npmjs.org" icon="command-icon.png" url={article.package.links.npm} />

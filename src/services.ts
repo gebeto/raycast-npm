@@ -8,7 +8,7 @@ export const getPackageSize = async (packageName: string) => {
 
 
 const extractor = /\.com\/([\w\W]+)/;
-export const getRepoDetails = async (repo: string) => {
+export const getRepoDetails = async (repo: string): Promise<string | undefined> => {
   const name = extractor.exec(repo)?.[1];
   const branches = ["master", "main"];
   for (const branch of branches) {
@@ -19,7 +19,6 @@ export const getRepoDetails = async (repo: string) => {
       return data;
     }
   }
-  return false;
 }
 
 
