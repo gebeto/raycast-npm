@@ -50,13 +50,14 @@ function PackagesListItem(props: { article: Record<string, string> }) {
     <List.Item
       id={article.package.name}
       title={article.package.name}
-      subtitle="NPM"
-      icon="list-icon-red.png"
-      accessoryTitle={new Date(article.package.date).toLocaleDateString()}
+      subtitle={article.package.description}
+      icon="command-icon.png"
+      accessoryTitle={`v${article.package.version}`}
     >
       <ActionPanel>
-        <OpenInBrowserAction url={article.package.links.npm} />
-        <CopyToClipboardAction title="Copy link" content={article.package.links.npm} />
+        <OpenInBrowserAction title="Open npmjs.org" icon="command-icon.png" url={article.package.links.npm} />
+        <OpenInBrowserAction title="Open home page" url={article.package.links.homepage} />
+        <CopyToClipboardAction shortcut={{ modifiers: ["cmd", "shift"], key: "y" }} title="Copy link" content={article.package.links.npm} />
         <CopyToClipboardAction shortcut={{ modifiers: ["cmd", "shift"], key: "y" }} title="Copy Yarn" content={`yarn add ${article.package.name}`} />
         <CopyToClipboardAction shortcut={{ modifiers: ["cmd", "shift"], key: "n" }} title="Copy NPM" content={`npm install ${article.package.name}`} />
       </ActionPanel>
