@@ -27,18 +27,25 @@ export const PackagesListItem: React.FC<PackagesListItemProps> = ({ item }) => {
     return `v${item.package.version}`
   }, [item.package]);
 
+  const icon = React.useMemo(() => {
+    if (item.flags?.deprecated) {
+      return "npm-warn.png";
+    }
+    return "npm.png";
+  }, [item.package])
+
   return (
     <List.Item
       id={item.package.name}
       title={item.package.name}
       subtitle={item.package.description}
-      icon="command-icon.png"
+      icon={icon}
       accessoryTitle={accessory}
     >
       <ActionPanel>
         <ActionPanel.Item
           title="Details"
-          icon="command-icon.png"
+          icon={icon}
           onAction={async () => {
             if (item.package.links.repository) {
               push(<PackageDetails title={item.package.name} repo={item.package.links.repository} />)
