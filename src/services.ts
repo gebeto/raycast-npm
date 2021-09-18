@@ -16,7 +16,7 @@ export const getRepoDetails = async (repo: string): Promise<string | undefined> 
     let req = await fetch(`https://raw.githubusercontent.com/${name}/${branch}/README.md`);
     if (req.ok) {
       let data = await req.text();
-      data = data.replace(/\!\[.+?\]\(.+?\)/g, '');
+      data = data.replace(/\!\[.+?\][\(\[].+?[\)\]]/g, '');
       return data;
     }
   }

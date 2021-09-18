@@ -7,31 +7,36 @@ import {
   useNavigation
 } from "@raycast/api";
 import { getRepoDetails } from './services';
+import { NPMPackage } from './entities';
 
 
 export type PackageDetailsProps = {
-  title: string,
-  repo: string,
+  info: NPMPackage;
 };
 
 
-export const PackageDetails: React.FC<PackageDetailsProps> = (props) => {
+export const PackageDetails: React.FC<PackageDetailsProps> = ({ info }) => {
   const { pop } = useNavigation();
   const [details, setDetails] = React.useState<string>();
 
   React.useEffect(() => {
     (async () => {
-      const repoDetails = await getRepoDetails(props.repo);
-      if (!repoDetails) {
-        pop();
-        showToast(ToastStyle.Failure, "Details is not found");
+      if (info.package.links.repository) {
+        let repoDetails = await getRepoDetails(info.package.links.repository);
+        if (!repoDetails) {
+          pop();
+          showToast(ToastStyle.Failure, "Details is not found");
+        }
+        if (info.flags?.deprecated) {
+          repoDetails = `# DEPRECATED: ${info.flags?.deprecated} \n-----\n ${repoDetails}`;
+        }
+        setDetails(repoDetails);
       }
-      setDetails(repoDetails);
     })();
-  }, [props.repo]);
+  }, [info]);
 
   return (
-    <Detail navigationTitle={`${props.title} details`} markdown={details} isLoading={!details}>
+    <Detail navigationTitle={`${info.package.name} details`} markdown={details} isLoading={!details}>
       <ActionPanel title="Detail">
         <ActionPanel.Item title="Pop Back" onAction={pop} />
       </ActionPanel>

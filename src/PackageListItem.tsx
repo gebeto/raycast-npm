@@ -48,7 +48,7 @@ export const PackagesListItem: React.FC<PackagesListItemProps> = ({ item }) => {
           icon={icon}
           onAction={async () => {
             if (item.package.links.repository) {
-              push(<PackageDetails title={item.package.name} repo={item.package.links.repository} />)
+              push(<PackageDetails info={item} />)
             } else {
               showToast(ToastStyle.Failure, "Package repository is not found")
             }
