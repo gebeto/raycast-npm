@@ -1,5 +1,6 @@
 import { showToast, ToastStyle } from '@raycast/api';
 import fetch from "node-fetch";
+import { NPMPackage } from './entities';
 
 
 export const getPackageSize = async (packageName: string) => {
@@ -22,14 +23,13 @@ export const getRepoDetails = async (repo: string): Promise<string | undefined> 
 }
 
 
-export const fetchPackages = async (query: string): Promise<Record<string, string>[]> => {
+export const fetchPackages = async (query: string): Promise<NPMPackage[]> => {
   try {
     const response = await fetch(`https://api.npms.io/v2/search/suggestions?q=${query}`);
-    const json = await response.json();
-    return json as Record<string, string>[];
+    return await response.json() as NPMPackage[];
   } catch (error) {
     console.error(error);
-    showToast(ToastStyle.Failure, "Could not load articles");
-    return Promise.resolve([]);
+    showToast(ToastStyle.Failure, "Could not load packages");
+    return [];
   }
 }
