@@ -40,7 +40,7 @@ export const PackageDetails: React.FC<PackageDetailsProps> = ({ info }) => {
   }, [info]);
 
   return (
-    <Detail navigationTitle={`${info.package.name} details`} markdown={details} isLoading={!details}>
+    <Detail navigationTitle={`Details: ${info.package.name}`} markdown={details} isLoading={!details}>
       <ActionPanel title="Detail">
         <PackageActions info={info} />
       </ActionPanel>

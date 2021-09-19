@@ -4,6 +4,7 @@ import {
   PasteAction,
   ActionPanel,
   Icon,
+  Color,
 } from '@raycast/api';
 import { NPMPackage } from './entities';
 
@@ -11,6 +12,18 @@ import { NPMPackage } from './entities';
 export type PackageActionsProps = {
   info: NPMPackage;
 }
+
+
+export const TerminalIconLocal = {
+  source: Icon.Terminal,
+  tintColor: Color.Green,
+};
+
+
+export const TerminalIconGlobal = {
+  source: Icon.Terminal,
+  tintColor: Color.Yellow,
+};
 
 
 export const PackageActions: React.FC<PackageActionsProps> = ({ info }) => {
@@ -22,10 +35,10 @@ export const PackageActions: React.FC<PackageActionsProps> = ({ info }) => {
         {info.package.links.npm && <CopyToClipboardAction shortcut={{ modifiers: ["cmd", "shift"], key: "l" }} title="Copy npmjs.org link" content={info.package.links.npm} />}
       </ActionPanel.Section>
       <ActionPanel.Section title="Install">
-        <PasteAction icon={Icon.Terminal} shortcut={{ modifiers: ["cmd", "shift"], key: "y" }} title="Paste Install Yarn" content={`yarn add ${info.package.name}`} />
-        <PasteAction icon={Icon.Terminal} shortcut={{ modifiers: ["cmd", "shift"], key: "n" }} title="Paste Install NPM" content={`npm install ${info.package.name}`} />
-        <PasteAction icon={Icon.Terminal} title="Paste Install global Yarn" content={`yarn global add ${info.package.name}`} />
-        <PasteAction icon={Icon.Terminal} title="Paste Install global NPM" content={`npm install -g ${info.package.name}`} />
+        <PasteAction icon={TerminalIconLocal} shortcut={{ modifiers: ["cmd", "shift"], key: "y" }} title="Paste Install Yarn" content={`yarn add ${info.package.name}`} />
+        <PasteAction icon={TerminalIconLocal} shortcut={{ modifiers: ["cmd", "shift"], key: "n" }} title="Paste Install NPM" content={`npm install ${info.package.name}`} />
+        <PasteAction icon={TerminalIconGlobal} title="Paste Install global Yarn" content={`yarn global add ${info.package.name}`} />
+        <PasteAction icon={TerminalIconGlobal} title="Paste Install global NPM" content={`npm install -g ${info.package.name}`} />
       </ActionPanel.Section>
     </>
   );
