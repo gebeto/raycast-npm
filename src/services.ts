@@ -20,7 +20,12 @@ export const simpleFetchJSON = async (url: string, options?: Parameters<typeof f
 
 
 export const getPackageSize = async (packageName: string) => {
-	return fetch(`https://bundlephobia.com/api/size?package=${packageName}&record=true`);
+	return await fetch(`https://bundlephobia.com/api/size?package=${packageName}&record=true`);
+}
+
+
+export const getPackageAllDetails = async (packageName: string) => {
+	return await simpleFetchJSON(`https://registry.npmjs.org/${packageName}`);
 }
 
 

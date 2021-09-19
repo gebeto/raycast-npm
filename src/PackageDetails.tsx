@@ -17,7 +17,7 @@ export type PackageDetailsProps = {
 
 
 export const PackageDetails: React.FC<PackageDetailsProps> = ({ info }) => {
-  const { pop } = useNavigation();
+  const { push, pop } = useNavigation();
   const [details, setDetails] = React.useState<string>();
 
   React.useEffect(() => {

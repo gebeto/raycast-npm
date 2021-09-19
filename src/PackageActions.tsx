@@ -12,6 +12,7 @@ import {
 import { NPMPackage } from './entities';
 import { AssetIcon } from './AssetIcon';
 import { PackageLicense } from './PackageLicense';
+import { PackageVersions } from './PackageVersions';
 
 
 export type PackageActionsProps = {
@@ -44,6 +45,14 @@ export const PackageActions: React.FC<PackageActionsProps> = ({ info }) => {
           } else {
             showToast(ToastStyle.Failure, "Package repository is not found")
           }
+        }}
+      />
+      <ActionPanel.Item
+        title="Versions"
+        icon={AssetIcon.npm}
+        shortcut={{ modifiers: ["cmd", "shift"], key: "v" }}
+        onAction={async () => {
+          push(<PackageVersions info={info} />)
         }}
       />
       <ActionPanel.Submenu title="Links" icon={Icon.Globe} shortcut={{ modifiers: ["cmd"], key: "l" }}>
