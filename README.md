@@ -8,9 +8,10 @@ This extension brings [NPM](https://www.npmjs.com/) search to raycast!
 
 - search packages
 - show packages info status in list
- - name
- - version
- - deprecated status
+  - name
+  - version
+  - deprecated status
 - check package README
 - check package LICENSE
+- ability to see package old and current versions
 - ability to paste install command to terminal with yarn or npm
