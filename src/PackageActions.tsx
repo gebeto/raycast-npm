@@ -14,32 +14,34 @@ export type PackageActionsProps = {
 }
 
 
-export const TerminalIconLocal = {
+export const TerminalIconYarn = {
   source: Icon.Terminal,
-  tintColor: Color.Green,
+  tintColor: Color.Blue,
 };
 
 
-export const TerminalIconGlobal = {
+export const TerminalIconNpm = {
   source: Icon.Terminal,
-  tintColor: Color.Yellow,
+  tintColor: Color.Red,
 };
 
 
 export const PackageActions: React.FC<PackageActionsProps> = ({ info }) => {
   return (
     <>
-      <ActionPanel.Section title="Info">
+      <ActionPanel.Submenu title="Links" icon={Icon.Globe} shortcut={{ modifiers: ["cmd"], key: "l" }}>
         {info.package.links.npm && <OpenInBrowserAction title="Open npmjs.org" url={info.package.links.npm} />}
         {info.package.links.homepage && <OpenInBrowserAction title="Open home page" url={info.package.links.homepage} />}
-        {info.package.links.npm && <CopyToClipboardAction shortcut={{ modifiers: ["cmd", "shift"], key: "l" }} title="Copy npmjs.org link" content={info.package.links.npm} />}
-      </ActionPanel.Section>
-      <ActionPanel.Section title="Install">
-        <PasteAction icon={TerminalIconLocal} shortcut={{ modifiers: ["cmd", "shift"], key: "y" }} title="Paste Install Yarn" content={`yarn add ${info.package.name}`} />
-        <PasteAction icon={TerminalIconLocal} shortcut={{ modifiers: ["cmd", "shift"], key: "n" }} title="Paste Install NPM" content={`npm install ${info.package.name}`} />
-        <PasteAction icon={TerminalIconGlobal} title="Paste Install global Yarn" content={`yarn global add ${info.package.name}`} />
-        <PasteAction icon={TerminalIconGlobal} title="Paste Install global NPM" content={`npm install -g ${info.package.name}`} />
-      </ActionPanel.Section>
+        {info.package.links.npm && <CopyToClipboardAction title="Copy npmjs.org link" content={info.package.links.npm} />}
+      </ActionPanel.Submenu>
+      <ActionPanel.Submenu title="Install Yarn" icon={TerminalIconYarn} shortcut={{ modifiers: ["cmd"], key: "y" }}>
+        <PasteAction icon={TerminalIconYarn} title="Paste Install Yarn" content={`yarn add ${info.package.name}`} />
+        <PasteAction icon={TerminalIconYarn} title="Paste Install global Yarn" content={`yarn global add ${info.package.name}`} />
+      </ActionPanel.Submenu>
+      <ActionPanel.Submenu title="Install NPM" icon={TerminalIconNpm} shortcut={{ modifiers: ["cmd"], key: "n" }}>
+        <PasteAction icon={TerminalIconNpm} title="Paste Install NPM" content={`npm install ${info.package.name}`} />
+        <PasteAction icon={TerminalIconNpm} title="Paste Install global NPM" content={`npm install -g ${info.package.name}`} />
+      </ActionPanel.Submenu>
     </>
   );
 };
