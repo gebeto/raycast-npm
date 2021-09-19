@@ -2,24 +2,43 @@ import { showToast, ToastStyle } from '@raycast/api';
 import fetch from "node-fetch";
 import { NPMPackage } from './entities';
 
+import base64 from 'base-64';
+
+
+export const branches = ["master", "main"];
+export const licenses = ["LICENSE", "LICENSE.md"];
+export const repoNameExtractor = /\.com\/([\w\W]+)/;
+
+
+export const simpleFetchText = async (url: string, options?: Parameters<typeof fetch>[1]): Promise<string> => {
+  return await (await fetch(url)).text();
+}
+
+
+export const simpleFetchJSON = async (url: string, options?: Parameters<typeof fetch>[1]): Promise<any> => {
+  return await (await fetch(url)).json();
+}
+
 
 export const getPackageSize = async (packageName: string) => {
 	return fetch(`https://bundlephobia.com/api/size?package=${packageName}&record=true`);
 }
 
 
-const extractor = /\.com\/([\w\W]+)/;
 export const getRepoDetails = async (repo: string): Promise<string | undefined> => {
-  const name = extractor.exec(repo)?.[1];
-  const branches = ["master", "main"];
-  for (const branch of branches) {
-    let req = await fetch(`https://raw.githubusercontent.com/${name}/${branch}/README.md`);
-    if (req.ok) {
-      let data = await req.text();
-      data = data.replace(/\!\[.+?\][\(\[].+?[\)\]]/g, '');
-      return data;
-    }
-  }
+  const name = repoNameExtractor.exec(repo)?.[1];
+  const readmeInfo = await simpleFetchJSON(`https://api.github.com/repos/${name}/readme`);
+  let content = base64.decode(readmeInfo.content);
+  content = content.replace(/\!\[.+?\][\(\[].+?[\)\]]/g, '');
+  return content;
+}
+
+
+export const getRepoLicense = async (repo: string): Promise<string | undefined> => {
+  const name = repoNameExtractor.exec(repo)?.[1];
+  const licenseInfo = await simpleFetchJSON(`https://api.github.com/repos/${name}/license`);
+  const content = base64.decode(licenseInfo.content);
+  return content;
 }
 
 
