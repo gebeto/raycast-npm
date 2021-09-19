@@ -46,4 +46,4 @@ export const PackageDetails: React.FC<PackageDetailsProps> = ({ info }) => {
       </ActionPanel>
     </Detail>
   );
-}
+};

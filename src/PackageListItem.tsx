@@ -59,4 +59,4 @@ export const PackagesListItem: React.FC<PackagesListItemProps> = ({ item }) => {
       </ActionPanel>
     </List.Item>
   );
-}
+};

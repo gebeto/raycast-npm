@@ -66,4 +66,4 @@ export const PackageVersions: React.FC<PackageVersionsProps> = ({ info }) => {
       </List.Section>
     </List>
   );
-}
+};

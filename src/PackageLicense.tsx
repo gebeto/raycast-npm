@@ -41,4 +41,4 @@ export const PackageLicense: React.FC<PackageLicenseProps> = ({ info }) => {
       isLoading={!license}
     />
   );
-}
+};
