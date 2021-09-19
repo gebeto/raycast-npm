@@ -4,6 +4,8 @@ This extension brings [NPM](https://www.npmjs.com/) search to raycast!
 
 **Note: this extension is under active development and is subject to changes.**
 
+![A screenshot of NPM via raycast](./images/demo.gif)
+
 ## Features
 
 - search packages
