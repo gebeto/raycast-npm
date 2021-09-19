@@ -3,13 +3,12 @@ import {
   List,
   ActionPanel,
   useNavigation,
-  CopyToClipboardAction,
-  OpenInBrowserAction,
   showToast,
   ToastStyle,
 } from "@raycast/api";
 import { PackageDetails } from './PackageDetails';
 import { NPMPackage } from './entities';
+import { PackageActions } from './PackageActions';
 
 
 export type PackagesListItemProps = {
@@ -43,22 +42,20 @@ export const PackagesListItem: React.FC<PackagesListItemProps> = ({ item }) => {
       accessoryTitle={accessory}
     >
       <ActionPanel>
-        <ActionPanel.Item
-          title="Details"
-          icon={icon}
-          onAction={async () => {
-            if (item.package.links.repository) {
-              push(<PackageDetails info={item} />)
-            } else {
-              showToast(ToastStyle.Failure, "Package repository is not found")
-            }
-          }}
-        />
-        {item.package.links.npm && <OpenInBrowserAction title="Open npmjs.org" icon="command-icon.png" url={item.package.links.npm} />}
-        {item.package.links.homepage && <OpenInBrowserAction title="Open home page" url={item.package.links.homepage} />}
-        {item.package.links.npm && <CopyToClipboardAction shortcut={{ modifiers: ["cmd", "shift"], key: "y" }} title="Copy link" content={item.package.links.npm} />}
-        <CopyToClipboardAction shortcut={{ modifiers: ["cmd", "shift"], key: "y" }} title="Copy Yarn" content={`yarn add ${item.package.name}`} />
-        <CopyToClipboardAction shortcut={{ modifiers: ["cmd", "shift"], key: "n" }} title="Copy NPM" content={`npm install ${item.package.name}`} />
+        <ActionPanel.Section>
+          <ActionPanel.Item
+            title="Details"
+            icon={icon}
+            onAction={async () => {
+              if (item.package.links.repository) {
+                push(<PackageDetails info={item} />)
+              } else {
+                showToast(ToastStyle.Failure, "Package repository is not found")
+              }
+            }}
+          />
+        </ActionPanel.Section>
+        <PackageActions info={item} />
       </ActionPanel>
     </List.Item>
   );

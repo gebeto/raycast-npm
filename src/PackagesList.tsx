@@ -14,7 +14,7 @@ export const PackagesList = () => {
       throttle
       isLoading={isLoading}
       navigationTitle="Search Package"
-      searchBarPlaceholder="Filter packages by name..."
+      searchBarPlaceholder="Search packages by name..."
       onSearchTextChange={async (text) => {
         setIsLoading(true);
         try {

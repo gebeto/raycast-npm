@@ -4,10 +4,11 @@ import {
   Detail,
   showToast,
   ToastStyle,
-  useNavigation
+  useNavigation,
 } from "@raycast/api";
 import { getRepoDetails } from './services';
 import { NPMPackage } from './entities';
+import { PackageActions } from './PackageActions';
 
 
 export type PackageDetailsProps = {
@@ -31,6 +32,9 @@ export const PackageDetails: React.FC<PackageDetailsProps> = ({ info }) => {
           repoDetails = `# DEPRECATED: ${info.flags?.deprecated} \n-----\n ${repoDetails}`;
         }
         setDetails(repoDetails);
+      } else {
+        pop();
+        showToast(ToastStyle.Failure, "Repository is not found");
       }
     })();
   }, [info]);
@@ -38,7 +42,7 @@ export const PackageDetails: React.FC<PackageDetailsProps> = ({ info }) => {
   return (
     <Detail navigationTitle={`${info.package.name} details`} markdown={details} isLoading={!details}>
       <ActionPanel title="Detail">
-        <ActionPanel.Item title="Pop Back" onAction={pop} />
+        <PackageActions info={info} />
       </ActionPanel>
     </Detail>
   );
