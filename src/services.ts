@@ -5,9 +5,8 @@ import { NPMPackage } from './entities';
 import base64 from 'base-64';
 
 
-export const branches = ["master", "main"];
-export const licenses = ["LICENSE", "LICENSE.md"];
 export const repoNameExtractor = /\.com\/([\w\W]+)/;
+export const getRepoName = (url: string): string | undefined => repoNameExtractor.exec(url)?.[1];
 
 
 export const simpleFetchText = async (url: string, options?: Parameters<typeof fetch>[1]): Promise<string> => {
@@ -26,7 +25,7 @@ export const getPackageSize = async (packageName: string) => {
 
 
 export const getRepoDetails = async (repo: string): Promise<string | undefined> => {
-  const name = repoNameExtractor.exec(repo)?.[1];
+  const name = getRepoName(repo);
   const readmeInfo = await simpleFetchJSON(`https://api.github.com/repos/${name}/readme`);
   let content = base64.decode(readmeInfo.content);
   content = content.replace(/\!\[.+?\][\(\[].+?[\)\]]/g, '');
@@ -35,7 +34,7 @@ export const getRepoDetails = async (repo: string): Promise<string | undefined> 
 
 
 export const getRepoLicense = async (repo: string): Promise<string | undefined> => {
-  const name = repoNameExtractor.exec(repo)?.[1];
+  const name = getRepoName(repo);
   const licenseInfo = await simpleFetchJSON(`https://api.github.com/repos/${name}/license`);
   const content = base64.decode(licenseInfo.content);
   return content;

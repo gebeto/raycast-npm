@@ -54,17 +54,6 @@ export const PackagesListItem: React.FC<PackagesListItemProps> = ({ item }) => {
             }
           }}
         />
-        <ActionPanel.Item
-          title="License"
-          icon={icon}
-          onAction={async () => {
-            if (item.package.links.repository) {
-              push(<PackageLicense info={item} />)
-            } else {
-              showToast(ToastStyle.Failure, "Package repository is not found")
-            }
-          }}
-        />
         <PackageActions info={item} />
       </ActionPanel>
     </List.Item>

@@ -5,8 +5,12 @@ import {
   ActionPanel,
   Icon,
   Color,
+  useNavigation,
+  showToast,
+  ToastStyle,
 } from '@raycast/api';
 import { NPMPackage } from './entities';
+import { PackageLicense } from './PackageLicense';
 
 
 export type PackageActionsProps = {
@@ -27,8 +31,20 @@ export const TerminalIconNpm = {
 
 
 export const PackageActions: React.FC<PackageActionsProps> = ({ info }) => {
+  const { push } = useNavigation();
   return (
     <>
+      <ActionPanel.Item
+        title="License"
+        icon="npm.png"
+        onAction={async () => {
+          if (info.package.links.repository) {
+            push(<PackageLicense info={info} />)
+          } else {
+            showToast(ToastStyle.Failure, "Package repository is not found")
+          }
+        }}
+      />
       <ActionPanel.Submenu title="Links" icon={Icon.Globe} shortcut={{ modifiers: ["cmd"], key: "l" }}>
         {info.package.links.npm && <OpenInBrowserAction title="Open npmjs.org" url={info.package.links.npm} />}
         {info.package.links.homepage && <OpenInBrowserAction title="Open home page" url={info.package.links.homepage} />}
