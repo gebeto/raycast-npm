@@ -27,17 +27,21 @@ export const getPackageSize = async (packageName: string) => {
 export const getRepoDetails = async (repo: string): Promise<string | undefined> => {
   const name = getRepoName(repo);
   const readmeInfo = await simpleFetchJSON(`https://api.github.com/repos/${name}/readme`);
-  let content = base64.decode(readmeInfo.content);
-  content = content.replace(/\!\[.+?\][\(\[].+?[\)\]]/g, '');
-  return content;
+  if (readmeInfo.content) {
+    let content = base64.decode(readmeInfo.content);
+    content = content.replace(/\!\[.+?\][\(\[].+?[\)\]]/g, '');
+    return content;
+  }
 }
 
 
 export const getRepoLicense = async (repo: string): Promise<string | undefined> => {
   const name = getRepoName(repo);
   const licenseInfo = await simpleFetchJSON(`https://api.github.com/repos/${name}/license`);
-  const content = base64.decode(licenseInfo.content);
-  return content;
+  if (licenseInfo.content) {
+    const content = base64.decode(licenseInfo.content);
+    return content;
+  }
 }
 
 

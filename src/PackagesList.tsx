@@ -7,7 +7,7 @@ import { NPMPackage } from './entities';
 
 export const PackagesList = () => {
   const [isLoading, setIsLoading] = React.useState(false);
-  const [items, setItems] = React.useState<NPMPackage[]>([]);
+  const [items, setItems] = React.useState<NPMPackage[]>();
 
   return (
     <List
@@ -30,7 +30,7 @@ export const PackagesList = () => {
         setIsLoading(false);
       }}
     >
-      {items.map((item) => (
+      {items?.map((item) => (
         <PackagesListItem key={item.package.name} item={item} />
       ))}
     </List>
