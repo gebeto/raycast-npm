@@ -10,6 +10,7 @@ import {
   ToastStyle,
 } from '@raycast/api';
 import { NPMPackage } from './entities';
+import { AssetIcon } from './AssetIcon';
 import { PackageLicense } from './PackageLicense';
 
 
@@ -36,7 +37,7 @@ export const PackageActions: React.FC<PackageActionsProps> = ({ info }) => {
     <>
       <ActionPanel.Item
         title="License"
-        icon="npm.png"
+        icon={AssetIcon.npm}
         onAction={async () => {
           if (info.package.links.repository) {
             push(<PackageLicense info={info} />)

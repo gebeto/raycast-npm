@@ -10,6 +10,7 @@ import { PackageDetails } from './PackageDetails';
 import { NPMPackage } from './entities';
 import { PackageActions } from './PackageActions';
 import { PackageLicense } from './PackageLicense';
+import { AssetIcon } from './AssetIcon';
 
 
 export type PackagesListItemProps = {
@@ -29,9 +30,9 @@ export const PackagesListItem: React.FC<PackagesListItemProps> = ({ item }) => {
 
   const icon = React.useMemo(() => {
     if (item.flags?.deprecated) {
-      return "npm-warn.png";
+      return AssetIcon.npmWarn;
     }
-    return "npm.png";
+    return AssetIcon.npm;
   }, [item.package])
 
   return (
