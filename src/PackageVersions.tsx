@@ -47,21 +47,31 @@ export const PackageVersions: React.FC<PackageVersionsProps> = ({ info }) => {
     <List navigationTitle={`Versions: ${info.package.name}`} isLoading={!details}>
       <List.Section title="Current versions">
         {currVersions.map(version =>
-          <List.Item icon={AssetIcon.npm} title={version.title} accessoryTitle={version.subtitle}>
-            <ActionPanel>
-              <CopyToClipboardAction title="Copy package version tag" content={`${info.package.name}@${version.title}`} />
-              <CopyToClipboardAction title="Copy package version" content={`${info.package.name}@${version.subtitle}`} />
-            </ActionPanel>
-          </List.Item>
+          <List.Item
+            icon={AssetIcon.npm}
+            title={version.title}
+            accessoryTitle={version.subtitle}
+            actions={
+              <ActionPanel>
+                <CopyToClipboardAction title="Copy package version tag" content={`${info.package.name}@${version.title}`} />
+                <CopyToClipboardAction title="Copy package version" content={`${info.package.name}@${version.subtitle}`} />
+              </ActionPanel>
+            }
+          />
         )}
       </List.Section>
       <List.Section title="Old versions">
         {versionsKeys.map(version =>
-          <List.Item icon={AssetIcon.npm} title={version} accessoryTitle={versions?.[version].name}>
-            <ActionPanel>
-              <CopyToClipboardAction title="Copy package version name" content={`${info.package.name}@${version}`} />
-            </ActionPanel>
-          </List.Item>
+          <List.Item
+            icon={AssetIcon.npm}
+            title={version}
+            accessoryTitle={versions?.[version].name}
+            actions={
+              <ActionPanel>
+                <CopyToClipboardAction title="Copy package version name" content={`${info.package.name}@${version}`} />
+              </ActionPanel>
+            }
+          />
         )}
       </List.Section>
     </List>

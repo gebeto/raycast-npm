@@ -42,21 +42,22 @@ export const PackagesListItem: React.FC<PackagesListItemProps> = ({ item }) => {
       subtitle={item.package.description}
       icon={icon}
       accessoryTitle={accessory}
-    >
-      <ActionPanel>
-        <ActionPanel.Item
-          title="Details"
-          icon={icon}
-          onAction={async () => {
-            if (item.package.links.repository) {
-              push(<PackageDetails info={item} />)
-            } else {
-              showToast(ToastStyle.Failure, "Package repository is not found")
-            }
-          }}
-        />
-        <PackageActions info={item} />
-      </ActionPanel>
-    </List.Item>
+      actions={
+        <ActionPanel>
+          <ActionPanel.Item
+            title="Details"
+            icon={icon}
+            onAction={async () => {
+              if (item.package.links.repository) {
+                push(<PackageDetails info={item} />)
+              } else {
+                showToast(ToastStyle.Failure, "Package repository is not found")
+              }
+            }}
+          />
+          <PackageActions info={item} />
+        </ActionPanel>
+      }
+    />
   );
 };
