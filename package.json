@@ -12,15 +12,25 @@
       "subtitle": "Discover NPM Packages",
       "description": "Application to discover NPM packages",
       "mode": "view"
+    },
+    {
+      "name": "package",
+      "title": "Better Translate",
+      "subtitle": "Transalte Text",
+      "description": "Transalte Text",
+      "mode": "view"
     }
   ],
   "dependencies": {
     "@raycast/api": "^1.25.1",
     "@types/base-64": "^1.0.0",
+    "@vitalets/google-translate-api": "^8.0.0",
     "base-64": "^1.0.0",
+    "debounce": "^1.2.1",
     "node-fetch": "^3.0.0"
   },
   "devDependencies": {
+    "@types/debounce": "^1.2.1",
     "@types/node": "~16.10.0",
     "@types/react": "^17.0.28",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
