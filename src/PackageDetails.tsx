@@ -1,23 +1,15 @@
-import React from 'react';
-import {
-  ActionPanel,
-  Detail,
-  showToast,
-  ToastStyle,
-  useNavigation,
-} from "@raycast/api";
-import { getRepoDetails } from './services';
-import { NPMPackage } from './entities';
-import { PackageActions } from './PackageActions';
-
+import React from "react";
+import { ActionPanel, Detail, showToast, Toast, useNavigation } from "@raycast/api";
+import { getRepoDetails } from "./services";
+import { NPMPackage } from "./entities";
+import { PackageActions } from "./PackageActions";
 
 export type PackageDetailsProps = {
   info: NPMPackage;
 };
 
-
 export const PackageDetails: React.FC<PackageDetailsProps> = ({ info }) => {
-  const { push, pop } = useNavigation();
+  const { pop } = useNavigation();
   const [details, setDetails] = React.useState<string>();
 
   React.useEffect(() => {
@@ -26,7 +18,7 @@ export const PackageDetails: React.FC<PackageDetailsProps> = ({ info }) => {
         let repoDetails = await getRepoDetails(info.package.links.repository);
         if (!repoDetails) {
           pop();
-          showToast(ToastStyle.Failure, "Details is not found");
+          showToast(Toast.Style.Failure, "Details is not found");
         }
         if (info.flags?.deprecated) {
           repoDetails = `# DEPRECATED: ${info.flags?.deprecated} \n-----\n ${repoDetails}`;
@@ -34,7 +26,7 @@ export const PackageDetails: React.FC<PackageDetailsProps> = ({ info }) => {
         setDetails(repoDetails);
       } else {
         pop();
-        showToast(ToastStyle.Failure, "Repository is not found");
+        showToast(Toast.Style.Failure, "Repository is not found");
       }
     })();
   }, [info]);
