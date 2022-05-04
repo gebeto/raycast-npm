@@ -12,13 +12,6 @@
       "subtitle": "Discover NPM Packages",
       "description": "Application to discover NPM packages",
       "mode": "view"
-    },
-    {
-      "name": "package",
-      "title": "Better Translate",
-      "subtitle": "Transalte Text",
-      "description": "Transalte Text",
-      "mode": "view"
     }
   ],
   "dependencies": {
