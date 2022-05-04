@@ -1,9 +1,11 @@
 {
+  "$schema": "https://www.raycast.com/schemas/extension.json",
   "name": "discover-npm-packages",
   "title": "Discover NPM Packages",
   "description": "Discover npm packages directly in raycast!",
   "icon": "command-icon.png",
   "author": "gebeto",
+  "owner": "gebeto-dev",
   "license": "MIT",
   "commands": [
     {
