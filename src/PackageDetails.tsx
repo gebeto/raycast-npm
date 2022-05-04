@@ -32,7 +32,38 @@ export const PackageDetails: React.FC<PackageDetailsProps> = ({ info }) => {
   }, [info]);
 
   return (
-    <Detail navigationTitle={`Details: ${info.package.name}`} markdown={details} isLoading={!details}>
+    <Detail
+      navigationTitle={`Details: ${info.package.name}`}
+      markdown={details}
+      isLoading={!details}
+      metadata={
+        <Detail.Metadata>
+          <Detail.Metadata.Label title="Version" text={info.package.version} />
+          <Detail.Metadata.Label title="Publisher" text={info.package.publisher.username} />
+          {info.package.links.npm && <Detail.Metadata.Link title="NPM" text="NPM" target={info.package.links.npm} />}
+          {info.package.links.homepage && (
+            <Detail.Metadata.Link title="Homepage" text="Homepage" target={info.package.links.homepage} />
+          )}
+          {info.package.links.repository && (
+            <Detail.Metadata.Link title="Repository" text="Repository" target={info.package.links.repository} />
+          )}
+          {info.package.links.bugs && (
+            <Detail.Metadata.Link title="Bugs" text="Bugs" target={info.package.links.bugs} />
+          )}
+          <Detail.Metadata.Separator />
+          <Detail.Metadata.TagList title="Maintainers">
+            {info.package.maintainers.map((author) => (
+              <Detail.Metadata.TagList.Item key={author.username} text={author.username} />
+            ))}
+          </Detail.Metadata.TagList>
+          <Detail.Metadata.TagList title="Keywords">
+            {info.package.keywords.map((keyword) => (
+              <Detail.Metadata.TagList.Item key={keyword} text={keyword} />
+            ))}
+          </Detail.Metadata.TagList>
+        </Detail.Metadata>
+      }
+    >
       <ActionPanel title="Detail">
         <PackageActions info={info} />
       </ActionPanel>
